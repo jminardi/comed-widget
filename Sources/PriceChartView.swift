@@ -1,5 +1,6 @@
 import SwiftUI
 import Charts
+import AppIntents
 
 /// Shared chart view used by both the widget and the host-app window.
 public struct PriceChartView: View {
@@ -75,12 +76,14 @@ public struct PriceWidgetView: View {
     let hoursBack: Int
     let hoursFwd: Int
     let compact: Bool
+    let showReload: Bool
 
-    public init(snapshot: PriceSnapshot, hoursBack: Int, hoursFwd: Int, compact: Bool = false) {
+    public init(snapshot: PriceSnapshot, hoursBack: Int, hoursFwd: Int, compact: Bool = false, showReload: Bool = false) {
         self.snapshot = snapshot
         self.hoursBack = hoursBack
         self.hoursFwd = hoursFwd
         self.compact = compact
+        self.showReload = showReload
     }
 
     private var color: Color { PriceLevel.color(snapshot.current) }
@@ -99,7 +102,17 @@ public struct PriceWidgetView: View {
                 }
                 Spacer(minLength: 0)
                 if !compact {
-                    Text("ComEd").font(.caption2.weight(.semibold)).foregroundStyle(.secondary)
+                    HStack(spacing: 4) {
+                        Text("ComEd").font(.caption2.weight(.semibold)).foregroundStyle(.secondary)
+                        if showReload {
+                            Button(intent: ReloadIntent()) {
+                                Image(systemName: "arrow.clockwise")
+                                    .font(.caption2.weight(.semibold))
+                                    .foregroundStyle(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
                 }
             }
             if !compact {

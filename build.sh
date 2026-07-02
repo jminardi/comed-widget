@@ -49,14 +49,15 @@ echo "==> Compiling widget extension binary"
 # runtime exits(0) after setup, before chronod's getAllDescriptors is answered.
 swiftc -parse-as-library -O -target "$TARGET" -sdk "$SDK" \
   -Xlinker -e -Xlinker _NSExtensionMain \
-  -framework Foundation \
+  -framework Foundation -framework AppIntents \
   -o "$BUILD/$WIDGET_NAME" \
-  "$SRC/ComEdData.swift" "$SRC/PriceChartView.swift" "$SRC/Widget.swift"
+  "$SRC/ComEdData.swift" "$SRC/PriceChartView.swift" "$SRC/ReloadIntent.swift" "$SRC/Widget.swift"
 
 echo "==> Compiling host app binary"
 swiftc -O -target "$TARGET" -sdk "$SDK" \
+  -framework AppIntents \
   -o "$BUILD/$APP_NAME" \
-  "$SRC/ComEdData.swift" "$SRC/PriceChartView.swift" "$SRC/App.swift"
+  "$SRC/ComEdData.swift" "$SRC/PriceChartView.swift" "$SRC/ReloadIntent.swift" "$SRC/App.swift"
 
 echo "==> Assembling bundle at staging"
 STAGE="$BUILD/$APP_NAME.app"

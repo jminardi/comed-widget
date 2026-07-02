@@ -43,9 +43,9 @@ struct ComEdWidgetEntryView: View {
             case .systemSmall:
                 PriceWidgetView(snapshot: snap, hoursBack: 0, hoursFwd: 0, compact: true)
             case .systemLarge:
-                PriceWidgetView(snapshot: snap, hoursBack: 10, hoursFwd: 14)
+                PriceWidgetView(snapshot: snap, hoursBack: 10, hoursFwd: 14, showReload: true)
             default: // systemMedium
-                PriceWidgetView(snapshot: snap, hoursBack: 6, hoursFwd: 8)
+                PriceWidgetView(snapshot: snap, hoursBack: 6, hoursFwd: 8, showReload: true)
             }
         }
         .containerBackground(.fill.tertiary, for: .widget)
